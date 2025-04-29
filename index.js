@@ -3,7 +3,7 @@ const {
   DisconnectReason,
   useMultiFileAuthState,
 } = require("@whiskeysockets/baileys");
-const { generateWAMessageFromContent } = require('@adiwajshing/baileys');
+const { generateWAMessageFromContent } = require('@whiskeysockets/baileys');
 const fs = require("fs-extra");
 const JsConfuser = require("js-confuser");
 const P = require("pino");
