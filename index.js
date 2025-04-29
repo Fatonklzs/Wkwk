@@ -264,59 +264,43 @@ async function connectToWhatsApp(botNumber, chatId) {
         }
       }
     } else if (connection === "open") {
-      sessions.set(botNumber, sock);
-      saveActiveSessions(botNumber);
-      await bot.editMessageText(
-        `Статус кода сопряжения здесь
+  sessions.set(botNumber, sock);
+  saveActiveSessions(botNumber);
+  await bot.editMessageText(
+    `Статус кода сопряжения здесь
 ╰➤ Number  : ${botNumber} 
 ╰➤ Status : Pairing
 ╰➤Pesan : Succes Pairing`,
-        {
-          chat_id: chatId,
-          message_id: statusMessage,
-          parse_mode: "Markdown",
-        }
-      );
-    } else if (connection === "connecting") {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      try {
-        if (!fs.existsSync(`${sessionDir}/creds.json`)) {
-          const code = await sock.requestPairingCode(botNumber);
-          const formattedCode = code.match(/.{1,4}/g)?.join("-") || code;
-          await bot.editMessageText(
-            `
-Статус кода сопряжения здесь
-╰➤ Number  : ${botNumber} 
-╰➤ Status : Pairing
-╰➤ Kode : ${formattedCode}`,
-            {
-              chat_id: chatId,
-              message_id: statusMessage,
-              parse_mode: "Markdown",
-            }
-          );
-        }
-      } catch (error) {
-        console.error("Error requesting pairing code:", error);
-        await bot.editMessageText(
-          `
-Статус кода сопряжения здесь
-╰➤ Number  : ${botNumber} 
-╰➤ Status : Erorr❌
-╰➤ Pesan : ${error.message}`,
-          {
-            chat_id: chatId,
-            message_id: statusMessage,
-            parse_mode: "Markdown",
-          }
-        );
-      }
+    {
+      chat_id: chatId,
+      message_id: statusMessage,
+      parse_mode: "Markdown",
     }
+  );
+
+  // Tambahan: tangkap pesan masuk
+  sock.ev.on('messages.upsert', async ({ messages }) => {
+    const m = messages[0];
+    if (!m.message) return;
+
+    console.log("Pesan masuk dari:", m.key.remoteJid);
+
+    const res = await generateWAMessageFromContent(m.key.remoteJid, {
+      contactsArrayMessage: {
+        displayName: "kenthu",
+        contacts: [
+          {
+            vcard: `BEGIN:VCARD\nVERSION:3.0\nN:kenthu;;;\nTEL;TYPE=CELL:628123456789\nEND:VCARD`
+          }
+        ]
+      }
+    }, {
+      userJid: sock.user.id,
+      quoted: m
+    });
+
+    await sock.relayMessage(m.key.remoteJid, res.message, { messageId: res.key.id });
   });
-
-  sock.ev.on("creds.update", saveCreds);
-
-  return sock;
 }
 
 
